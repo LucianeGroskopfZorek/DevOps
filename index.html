@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página de Teste</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --border: #2a2a32;
+      --accent: #7c3aed;
+      --accent2: #06d6a0;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --card: #1c1c23;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      position: relative;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* COUNTER BADGE */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent2);
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent2);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px;
+      margin: 3rem auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* INPUT DEMO */
+    .demo-section {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .demo-section h3 {
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 180px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    button:hover { opacity: 0.85; }
+    button:active { transform: scale(0.97); }
+
+    #resultado {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border-radius: 10px;
+      border-left: 3px solid var(--accent2);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent2);
+      display: none;
+    }
+
+    /* PROGRESS BARS */
+    .bars {
+      max-width: 600px;
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      background: var(--border);
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="tag">// arquivo de teste</span>
+    <h1>Olá, Web!</h1>
+    <p class="subtitle">Uma página HTML simples para testar estrutura, estilos e interações básicas.</p>
+    <div class="badge">
+      <span class="dot"></span>
+      página ativa
+    </div>
+  </header>
+
+  <!-- CARDS -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">🏗️</div>
+      <h2>Estrutura HTML</h2>
+      <p>Tags semânticas, hierarquia de elementos, acessibilidade e organização do conteúdo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎨</div>
+      <h2>Estilo CSS</h2>
+      <p>Variáveis, flexbox, grid, animações e transições para uma interface moderna.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h2>Interação JS</h2>
+      <p>Eventos, manipulação do DOM e lógica simples rodando direto no navegador.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <h2>Responsivo</h2>
+      <p>Layout que se adapta a diferentes tamanhos de tela, do celular ao desktop.</p>
+    </div>
+  </div>
+
+  <!-- INPUT DEMO -->
+  <div class="demo-section">
+    <h3>// teste de input</h3>
+    <div class="input-row">
+      <input type="text" id="campo" placeholder="Digite seu nome..." />
+      <button onclick="saudar()">Testar</button>
+    </div>
+    <div id="resultado"></div>
+  </div>
+
+  <!-- PROGRESS BARS -->
+  <div class="bars">
+    <div>
+      <div class="bar-label"><span>HTML</span><span>90%</span></div>
+      <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
+    </div>
+    <div>
+      <div class="bar-label"><span>CSS</span><span>75%</span></div>
+      <div class="bar-track"><div class="bar-fill" data-width="75"></div></div>
+    </div>
+    <div>
+      <div class="bar-label"><span>JavaScript</span><span>60%</span></div>
+      <div class="bar-track"><div class="bar-fill" data-width="60"></div></div>
+    </div>
+    <div>
+      <div class="bar-label"><span>Python / Flask</span><span>80%</span></div>
+      <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+    </div>
+  </div>
+
+  <footer>
+    &lt;/teste&gt; — HTML · CSS · JavaScript — 2026
+  </footer>
+
+  <script>
+    // Interação do input
+    function saudar() {
+      const nome = document.getElementById('campo').value.trim();
+      const resultado = document.getElementById('resultado');
+      if (nome) {
+        resultado.textContent = `>> Olá, ${nome}! Seu HTML está funcionando perfeitamente. ✅`;
+      } else {
+        resultado.textContent = `>> Digite um nome para testar! ⚠️`;
+      }
+      resultado.style.display = 'block';
+    }
+
+    document.getElementById('campo').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') saudar();
+    });
+
+    // Animar as barras ao carregar
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }, 300);
+    });
+  </script>
+
+</body>
+</html>
